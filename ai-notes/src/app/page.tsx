@@ -6,12 +6,6 @@ import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
 export default function Home() {
-  const { userId } = auth();
-
-  if (userId) {
-    redirect("/notes");
-  }
-
   return (
     <main className="flex h-screen flex-col items-center justify-center gap-5">
       <div className="flex items-center gap-4">
