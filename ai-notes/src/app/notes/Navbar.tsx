@@ -15,7 +15,7 @@ const Navbar = () => {
         </Link>
         <div className="flex items-center gap-2">
           <UserButton
-            afterMultiSessionSingleSignOutUrl="/"
+            afterSignOutUrl="/"
             appearance={{
               elements: { avatarBox: { width: "2.5rem", height: "2.5rem" } },
             }}
