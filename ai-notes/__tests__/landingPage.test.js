@@ -11,3 +11,11 @@ describe("landing page renders", () => {
     expect(paragraph).toBeInTheDocument();
   });
 });
+
+describe('start button', () => {
+    it('renders the Get Started button', () => {
+      render(<Home />);
+      const button = screen.getByText('Get Started');
+      expect(button).toBeInTheDocument();
+    });
+  });
