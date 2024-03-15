@@ -2,8 +2,8 @@ import Image from "next/image";
 import logo from "@/assets/logo.jpg";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { auth } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
+// import { auth } from "@clerk/nextjs";
+// import { redirect } from "next/navigation";
 
 export default function Home() {
   return (
