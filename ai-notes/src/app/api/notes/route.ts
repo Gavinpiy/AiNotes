@@ -5,7 +5,7 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
     // validate the input
-    const parseResult = createNoteSchema.safeParse({ body });
+    const parseResult = createNoteSchema.safeParse(body);
     //using safeparse lets us use our own error messages
 
     if (!parseResult.success) {
