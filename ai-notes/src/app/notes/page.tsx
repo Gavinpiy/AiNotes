@@ -11,7 +11,7 @@ export default async function NotesPage() {
   if (!userId) {
     throw Error("User ID not found!");
   }
-  // const allNotes = await prisma.note.findMany({ where: { userId } });
+  const allNotes = await prisma.note.findMany({ where: { userId } });
 
   return <div>hello</div>;
 }
