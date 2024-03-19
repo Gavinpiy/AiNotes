@@ -17,7 +17,8 @@ export default async function NotesPage() {
   return (
     //map over notes and display them
     //import and render the Note component
-    <div className="mx-14 my-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+    <div>
+    <div className="mx-14 my-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3" >
       {allNotes.map((note) => (
         <Note note={note} key={note.id} />
       ))}
@@ -27,6 +28,6 @@ export default async function NotesPage() {
           No notes found. Click on the Add Note button to add a note.
         </div>
       )}
-    </div>
+    </div></div>
   );
 }

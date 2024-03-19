@@ -17,7 +17,18 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={inter.className}>{children}</body>
+        <body
+          className={inter.className}
+          style={{
+            backgroundImage: `url('/images/background.jpg')`,
+            backgroundPosition: "center",
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+            height: "100vh",
+          }}
+        >
+          {children}
+        </body>
       </html>
     </ClerkProvider>
   );
