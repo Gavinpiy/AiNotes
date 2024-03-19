@@ -52,8 +52,9 @@ export default function AddEditNote({
   async function onSubmit(data: CreateNoteInput) {
     //check if we have a note to edit
     try {
+      let response;
       if (noteToEdit) {
-        const respose = await fetch("/api/notes", {
+        response = await fetch("/api/notes", {
           method: "PUT",
           body: JSON.stringify({
             id: noteToEdit.id,
@@ -61,7 +62,7 @@ export default function AddEditNote({
           }),
         });
       } else {
-        const response = await fetch("/api/notes", {
+        response = await fetch("/api/notes", {
           method: "POST",
           body: JSON.stringify(data),
         });
@@ -80,6 +81,9 @@ export default function AddEditNote({
     try {
       const response = await fetch("/api/notes", {
         method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           id: noteToEdit.id,
         }),
