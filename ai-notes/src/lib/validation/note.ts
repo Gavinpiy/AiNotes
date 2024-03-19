@@ -7,3 +7,12 @@ export const createNoteSchema = z.object({
 });
 
 export type CreateNoteInput = z.infer<typeof createNoteSchema>;
+
+//extend the createNoteSchema to create the updateNoteSchema
+export const updateNoteSchema = createNoteSchema.extend({
+  id: z.string().min(1),
+});
+
+export const deleteNoteSchema = z.object({
+  id: z.string().min(1),
+});

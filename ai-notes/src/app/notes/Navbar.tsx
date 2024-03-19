@@ -7,10 +7,10 @@ import { UserButton } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { useState } from "react";
-import AddNote from "@/components/ui/AddNote";
+import AddNote from "@/components/ui/AddEditNote";
 
 const Navbar = () => {
-  const [showAddNote, setShowAddNote] = useState(false);
+  const [showAddEditNote, setShowAddEditNote] = useState(false);
 
   return (
     <>
@@ -27,14 +27,14 @@ const Navbar = () => {
                 elements: { avatarBox: { width: "2.5rem", height: "2.5rem" } },
               }}
             />
-            <Button onClick={() => setShowAddNote(true)}>
+            <Button onClick={() => setShowAddEditNote(true)}>
               <Plus size={20} className="mr-2" />
               Add Note
             </Button>
           </div>
         </div>
       </div>
-      <AddNote open={showAddNote} setOpen={setShowAddNote} />
+      <AddNote open={showAddEditNote} setOpen={setShowAddEditNote} />
     </>
   );
 };
