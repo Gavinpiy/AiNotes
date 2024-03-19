@@ -21,7 +21,8 @@ import { Textarea } from "./textarea";
 import LoadingButton from "./loading-button";
 import { useRouter } from "next/navigation";
 import { Note } from "@prisma/client";
-
+import { useState } from "react";
+import { set } from "zod";
 interface AddEditNoteProps {
   // props
   open: boolean;
@@ -35,6 +36,8 @@ export default function AddEditNote({
   setOpen,
   noteToEdit,
 }: AddEditNoteProps) {
+  const [deleteNoteFunc, setDeleteNoteFunc] = useState(false);
+
   const router = useRouter();
   const form = useForm<CreateNoteInput>({
     resolver: zodResolver(createNoteSchema),
@@ -70,11 +73,32 @@ export default function AddEditNote({
       alert("Please try again!");
     }
   }
+
+  async function deleteNote() {
+    if (!noteToEdit) return;
+    setDeleteNoteFunc(true);
+    try {
+      const response = await fetch("/api/notes", {
+        method: "DELETE",
+        body: JSON.stringify({
+          id: noteToEdit.id,
+        }),
+      });
+      if (!response.ok) throw new Error("Failed to delete note");
+      router.refresh();
+      setOpen(false);
+    } catch (error) {
+      console.error(error);
+      alert("Please try again!");
+    } finally {
+      setDeleteNoteFunc(false);
+    }
+  }
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Add Note</DialogTitle>
+          <DialogTitle>{noteToEdit ? "Edit note" : "Add Note"}</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
@@ -104,7 +128,18 @@ export default function AddEditNote({
                 </FormItem>
               )}
             ></FormField>
-            <DialogFooter>
+            <DialogFooter className="gap-1 sm:gap-0">
+              {noteToEdit && (
+                <LoadingButton
+                  variant="destructive"
+                  loading={deleteNoteFunc}
+                  disabled={form.formState.isSubmitting}
+                  onClick={deleteNote}
+                  type="button"
+                >
+                  Delete
+                </LoadingButton>
+              )}
               <LoadingButton
                 type="submit"
                 loading={form.formState.isSubmitting}
