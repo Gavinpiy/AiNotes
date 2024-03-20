@@ -51,6 +51,7 @@ export async function POST(req: Request) {
           metadata: { userId },
         },
       ]);
+      //console.log(embedding);
     });
 
     //return the note with a status of 201
@@ -87,11 +88,26 @@ export async function PUT(req: Request) {
     if (!userId || note.userId !== userId) {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
-    // update the note
-    const updatedNote = await prisma.note.update({
-      where: { id },
-      data: { title, content },
+
+    const embedding = await getEmbeddingForNote(title, content);
+    // update the embedding in pinecone
+    const updatedNote = await prisma.$transaction(async (tx) => {
+      const updatedNote = await tx.note.update({
+        where: { id },
+        data: { title, content },
+      });
+
+      await notesIndex.upsert([
+        {
+          id,
+          values: embedding,
+          metadata: { userId },
+        },
+      ]);
+
+      return updatedNote;
     });
+
     //return the updated note with a status of 200
     return Response.json({ note: updatedNote }, { status: 200 });
   } catch (error) {
@@ -126,8 +142,13 @@ export async function DELETE(req: Request) {
     if (!userId || note.userId !== userId) {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
-    // delete the note
-    await prisma.note.delete({ where: { id } });
+
+    // delete the note from pinecone
+    await prisma.$transaction(async (tx) => {
+      // delete the note
+      await tx.note.delete({ where: { id } });
+      await notesIndex.deleteOne(id);
+    });
 
     //return a status of 204
     return Response.json({ message: "Successfully deleted" }, { status: 200 });
@@ -139,5 +160,5 @@ export async function DELETE(req: Request) {
 
 async function getEmbeddingForNote(title: string, content: string | undefined) {
   // get the embedding for the note with line break
-  return getEmbedding(title + '\n\n' + content ?? "");
+  return getEmbedding(title + "\n\n" + content ?? "");
 }
