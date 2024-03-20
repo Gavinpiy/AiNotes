@@ -1,10 +1,12 @@
 import prisma from "@/lib/db/prisma";
+import { getEmbedding } from "@/lib/openai";
 import {
   createNoteSchema,
   deleteNoteSchema,
   updateNoteSchema,
 } from "@/lib/validation/note";
 import { auth } from "@clerk/nextjs";
+import { get } from "http";
 
 //post request to create a note
 export async function POST(req: Request) {
@@ -117,4 +119,9 @@ export async function DELETE(req: Request) {
     console.error(error);
     return Response.json({ error: "Internal Server Error" }, { status: 500 });
   }
+}
+
+async function getEmbeddingForNote(title: string, content: string | undefined) {
+  // get the embedding for the note with line break
+  return getEmbedding(title + /n/n + content ?? "");
 }
