@@ -1,3 +1,4 @@
+import { notesIndex } from "@/lib/db/pinecone";
 import prisma from "@/lib/db/prisma";
 import { getEmbedding } from "@/lib/openai";
 import {
@@ -29,14 +30,29 @@ export async function POST(req: Request) {
     if (!userId) {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
-    // create the note
-    const note = await prisma.note.create({
-      data: {
-        title,
-        content,
-        userId,
-      },
+
+    //create embedding for the note
+    const embedding = await getEmbeddingForNote(title, content);
+    // use a transaction to create the note and the embedding. if one fails, the other will not be created
+    const note = await prisma.$transaction(async (tx) => {
+      // create the note in mongodb
+      const note = await prisma.note.create({
+        data: {
+          title,
+          content,
+          userId,
+        },
+      });
+      // create the embedding in pinecone. this will fail if the note is not created
+      await notesIndex.upsert([
+        {
+          id: note.id,
+          values: embedding,
+          metadata: { userId },
+        },
+      ]);
     });
+
     //return the note with a status of 201
     return Response.json({ note }, { status: 201 });
   } catch (error) {
@@ -123,5 +139,5 @@ export async function DELETE(req: Request) {
 
 async function getEmbeddingForNote(title: string, content: string | undefined) {
   // get the embedding for the note with line break
-  return getEmbedding(title + /n/n + content ?? "");
+  return getEmbedding(title + '\n\n' + content ?? "");
 }
