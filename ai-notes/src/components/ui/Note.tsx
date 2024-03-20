@@ -29,14 +29,14 @@ export default function Note({ note }: NoteProps) {
   return (
     <>
       <Card
-        className="cursor-pointer transition-shadow hover:shadow-lg"
+        className="cursor-pointer transition-shadow hover:shadow-xl"
         onClick={() => setShowEditDialog(true)}
       >
         <CardHeader>
           <CardTitle>{note.title}</CardTitle>
           <CardDescription className="text-xs">
             {createdUpdatedAtTimestamp}
-            {wasUpdated && " (Updated)"}
+            {wasUpdated && " (updated)"}
             {/* if the note was updated, display the updated string */}
           </CardDescription>
         </CardHeader>

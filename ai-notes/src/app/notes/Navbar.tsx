@@ -14,7 +14,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="p-4 shadow">
+      <div className="px-6 py-2 shadow bg-gradient-to-b from-[#4b6f87e6] to-[#A5C9DFe6]">
         <div className="items flex max-w-7xl flex-wrap justify-between gap-3 ">
           <Link href="/notes" className="flex items-center gap-1">
             <Image src={logo} alt="AI-Notes" width="40" height="40" />

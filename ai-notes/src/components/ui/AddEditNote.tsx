@@ -42,7 +42,7 @@ export default function AddEditNote({
   const form = useForm<CreateNoteInput>({
     resolver: zodResolver(createNoteSchema),
 
-    //if we have a note to edit we can set the default values otherwise it is an empty string
+    //if we have a note to edit we can set the default values as the saved info otherwise it is an empty string
     defaultValues: {
       title: noteToEdit?.title || "",
       content: noteToEdit?.content || "",
@@ -69,6 +69,7 @@ export default function AddEditNote({
       }
       router.refresh();
       setOpen(false);
+      form.reset();
     } catch (error) {
       console.error(error);
       alert("Please try again!");

@@ -24,7 +24,7 @@ export default async function NotesPage() {
       ))}
       {/* if no notes are found, display a message */}
       {allNotes.length === 0 && (
-        <div className="col-span-full my-10 text-center text-gray-500">
+        <div className="col-span-full my-10 text-center text-gray-700">
           No notes found. Click on the Add Note button to add a note.
         </div>
       )}
