@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { useState } from "react";
 import AddNote from "@/components/ui/AddEditNote";
+import AiChatButton from "@/components/AiChatButton";
 
 const Navbar = () => {
   const [showAddEditNote, setShowAddEditNote] = useState(false);
@@ -31,6 +32,7 @@ const Navbar = () => {
               <Plus size={20} className="mr-2" />
               Add Note
             </Button>
+            <AiChatButton />
           </div>
         </div>
       </div>
