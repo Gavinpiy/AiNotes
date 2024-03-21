@@ -19,7 +19,7 @@ const Navbar = () => {
         <div className="items flex max-w-7xl flex-wrap justify-between gap-3 ">
           <Link href="/notes" className="flex items-center gap-1">
             <Image src={logo} alt="AI-Notes" width="40" height="40" />
-            <span className="font-bold">AI Notes</span>
+        
           </Link>
           <div className="flex items-center gap-2">
             <UserButton
