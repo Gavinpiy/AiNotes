@@ -32,7 +32,7 @@ export default function AiChatbot({ open, onClose }: AiChatbotProps) {
         {" "}
         <XCircle size={30} />{" "}
       </button>
-      <div className="flex h-[600px] flex-col rounded border bg-white shadow-xl">
+      <div className="flex h-[600px] flex-col rounded border bg-white shadow-xl overflow-y-scroll ">
         <div className="h-full">
           {messages.map((message) => (
             <ChatMessage message={message} key={message.id}></ChatMessage>
@@ -43,6 +43,7 @@ export default function AiChatbot({ open, onClose }: AiChatbotProps) {
             value={input}
             onChange={handleInputChange}
             placeholder="Ask me anything..."
+            className="fixed bottom-3 right-3 max-w-[450px] w-full"
           ></Input>
         </form>
       </div>

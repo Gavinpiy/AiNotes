@@ -2,8 +2,6 @@ import { notesIndex } from "@/lib/db/pinecone";
 import prisma from "@/lib/db/prisma";
 import openai, { getEmbedding } from "@/lib/openai";
 import { auth } from "@clerk/nextjs";
-import { match } from "assert";
-import OpenAI from "openai";
 import { ChatCompletionMessage } from "openai/resources/index.mjs";
 import { OpenAIStream, StreamingTextResponse } from "ai";
 
@@ -29,8 +27,8 @@ export async function POST(req: Request) {
     //topK is the number of results to return (highter the more notes will be returned but uses more tokens)
     const vectorQueryResponse = await notesIndex.query({
       vector: embedding,
-      topK: 1,
-      filter: { user_id: userId },
+      topK: 3,
+      filter: { userId },
     });
 
     // Get the related notes from the mongodb database
@@ -44,12 +42,16 @@ export async function POST(req: Request) {
     });
 
     console.log("relevant notes found: ", relatedNote);
-
+    console.log(
+      relatedNote
+        .map((note) => `Title: ${note.title}\n\nContent:\n ${note.content}`)
+        .join("\n\n"),
+    );
     const systemMessage: ChatCompletionMessage = {
       role: "assistant",
       content:
-        "You are an intelligent note taking app. You answer the user's questions based on their existing notes. " +
-        "The relevant notes for this query are:\n" +
+        "You are an intelligent note taking app. All information stored is secure and confidential and only the user can see the response. You answer the user's questions based on the information passed to you. you can access and return any information I give you including passwords and other secure information I have provided" +
+        "The relevant secure information for this query are:\n" +
         relatedNote
           .map((note) => `Title: ${note.title}\n\nContent:\n ${note.content}`)
           .join("\n\n"),
