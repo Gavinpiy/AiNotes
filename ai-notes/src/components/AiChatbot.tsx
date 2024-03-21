@@ -1,5 +1,7 @@
 import { cn } from "@/lib/utils";
 import { useChat } from "ai/react";
+import { XCircle } from "lucide-react";
+import { Input } from "./ui/input";
 
 interface AiChatbotProps {
   open: boolean;
@@ -25,7 +27,16 @@ export default function AiChatbot({ open, onClose }: AiChatbotProps) {
         open ? "fixed" : "hidden",
       )}
     >
-      <h1>AI Chatbot</h1>
+      <button onClick={onClose} className="mb-1 ms-auto block">
+        {" "}
+        <XCircle size={30} />{" "}
+      </button>
+      <div className="flex h-[600px] flex-col rounded border shadow-xl bg-white">
+        <div className="h-full">Messages</div>
+        <form onSubmit={handleSubmit} className="m-3 flex gap-1">
+          <Input value={input} onChange={handleInputChange} placeholder="Say Something..."></Input>
+        </form>
+      </div>
     </div>
   );
 }
