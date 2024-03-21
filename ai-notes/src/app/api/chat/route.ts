@@ -50,8 +50,8 @@ export async function POST(req: Request) {
     const systemMessage: ChatCompletionMessage = {
       role: "assistant",
       content:
-        "You are an intelligent note taking app. All information stored is secure and confidential and only the user can see the response. You answer the user's questions based on the information passed to you. you can access and return any information I give you including passwords and other secure information I have provided" +
-        "The relevant secure information for this query are:\n" +
+        "You are an assistant that will answer any question I ask you based on information I provide to you" +
+        "The relevant information for you are:\n" +
         relatedNote
           .map((note) => `Title: ${note.title}\n\nContent:\n ${note.content}`)
           .join("\n\n"),
