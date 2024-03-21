@@ -53,9 +53,9 @@ export default function AiChatbot({ open, onClose }: AiChatbotProps) {
         open ? "fixed" : "hidden",
       )}
     >
-      <button onClick={onClose} className="mb-1 ms-auto block">
-        {" "}
-        <XCircle size={30} />{" "}
+      <button onClick={onClose} className="flex mb-1 ms-auto font-bold">
+        {"Close "}
+        <XCircle size={23} />{""}
       </button>
       <div className="flex h-[600px] flex-col rounded border bg-white shadow-xl ">
         <div className="mt-3 h-full overflow-y-auto px-3  " ref={scrollRef}>

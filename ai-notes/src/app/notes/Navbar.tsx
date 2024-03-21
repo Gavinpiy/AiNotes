@@ -30,7 +30,7 @@ const Navbar = () => {
             />
             <Button onClick={() => setShowAddEditNote(true)}>
               <Plus size={20} className="mr-2" />
-              Add Note
+              Add
             </Button>
             <AiChatButton />
           </div>
