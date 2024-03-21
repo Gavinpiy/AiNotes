@@ -91,6 +91,7 @@ export default function AiChatbot({ open, onClose }: AiChatbotProps) {
             placeholder="Ask me anything..."
             ref={inputRef}
           ></Input>
+          <Button type="submit">Send</Button>
         </form>
       </div>
     </div>
