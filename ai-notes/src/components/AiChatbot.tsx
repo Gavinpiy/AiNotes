@@ -42,6 +42,9 @@ export default function AiChatbot({ open, onClose }: AiChatbotProps) {
     }
   }, [open]);
 
+  //boolean will only be true if the last message is from the user
+  const lastMessageIsUser = messages[messages.length - 1]?.role === "user";
+
   return (
     // cn function allows us to combine tailwind classes conditionally
     <div
@@ -59,6 +62,17 @@ export default function AiChatbot({ open, onClose }: AiChatbotProps) {
           {messages.map((message) => (
             <ChatMessage message={message} key={message.id}></ChatMessage>
           ))}
+          {isLoading && lastMessageIsUser && (
+            <ChatMessage
+              message={{ role: "assistant", content: "Thinking..." }}
+            />
+          )}
+          {!error && messages.length === 0 && (
+            <div className="flex items-center justify-center h-full gap-3">
+              <Bot/>
+              Ask me anything!
+            </div>
+          )}
         </div>
         <form onSubmit={handleSubmit} className="m-3 flex gap-1">
           <Button
@@ -83,7 +97,7 @@ export default function AiChatbot({ open, onClose }: AiChatbotProps) {
   );
 }
 
-function ChatMessage({ message: { role, content } }: { message: Message }) {
+function ChatMessage({ message: { role, content } }: { message: Pick<Message, 'role' | 'content'>}) {
   const { user } = useUser();
   const isAiMessage = role === "assistant";
 
