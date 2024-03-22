@@ -1,6 +1,9 @@
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import NotFound from "ai-notes/src/app/not-found.tsx";
+import '@prisma/client';
+
+jest.mock('@prisma/client');
 
 describe("404 Page", () => {
   it("renders error text", () => {
@@ -10,3 +13,5 @@ describe("404 Page", () => {
     expect(heading).toBeInTheDocument();
   });
 });
+
+
