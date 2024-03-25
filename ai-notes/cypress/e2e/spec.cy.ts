@@ -8,7 +8,7 @@ describe("homepage", () => {
 
   it("navigates to  page", () => {
     //This is checking for the login button and clicking it
-  cy.contains(/get started/i);
+  cy.contains(/get started/i).click();
   }
   );
 })
