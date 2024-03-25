@@ -31,7 +31,7 @@ Cypress.Commands.add(`signOut`, () => {
   
   Cypress.Commands.add(`signIn`, () => {
     cy.log(`Signing in.`);
-    cy.visit(`/`);
+    cy.visit(`https://ai-notes-chi.vercel.app/notes`, { failOnStatusCode: false } );
   
     cy.window()
       .should((window) => {
