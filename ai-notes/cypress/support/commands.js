@@ -26,7 +26,7 @@
 
 Cypress.Commands.add(`signOut`, () => {
     cy.log(`sign out by clearing all cookies.`);
-    cy.clearCookies({ domain: null });
+    cy.clearCookies({ domain: 'https://ai-notes-chi.vercel.app/' });
   });
   
   Cypress.Commands.add(`signIn`, () => {
@@ -42,7 +42,7 @@ Cypress.Commands.add(`signOut`, () => {
         await cy.clearCookies({ domain: window.location.domain });
         const res = await window.Clerk.client.signIn.create({
           identifier: Cypress.env(`test_email`),
-          //TestAccount123\!! 
+          
           password: Cypress.env(`test_password`),
         });
   
